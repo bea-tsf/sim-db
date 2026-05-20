@@ -52,10 +52,8 @@ for let i = 0; i < 4; i = i + 1 {
   { 
     columbina skill;
   }
-  illuga burst, skill;
   linnea attack:1, skill;
+  illuga skill, burst;
   noelle skill, burst, attack:3, dash, attack:3, dash, attack:3, dash, attack:3, dash, attack:3, dash, attack:2;
-  
-
   
 }
