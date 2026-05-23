@@ -5,3 +5,5 @@ Most of these currently receive improvements fairly often, and none of them shou
 #### You have been warned. ####
 
 Don't come to me complaining that this or that sim isn't under KQMS or has an illegal sub amount, or that the subs are super unoptimized - keyword here being "complaining". Just point it out, or better yet, PR with an improved version.
+
+Optimizer calcs (all by antigua) are in the provided .json.

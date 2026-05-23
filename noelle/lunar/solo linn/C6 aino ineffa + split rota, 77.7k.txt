@@ -1,0 +1,68 @@
+noelle char lvl=90/90 cons=6 talent=9,9,9;
+noelle add weapon="serpentspine" refine=1 lvl=90/90 +params=[stacks=5];
+#noelle add set="sms" count=4;
+noelle add set="notsu" count=4;
+noelle add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622;
+noelle add stats def%=0.062*5 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10;
+
+aino char lvl=90/90 cons=6 talent=9,9,9;
+aino add weapon="favoniusgreatsword" refine=3 lvl=90/90;
+#aino add stats em=240;    // Simulating Master Key
+aino add set="silkenmoonsserenade" count=4;
+aino add stats hp=4780 er=0.518 em=187 cr=0.311;
+aino add stats hp=4780 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 em=19.315*4 er=0.0551*2 cr=0.0331*10 cd=0.0662*12;
+
+ineffa char lvl=90/90 cons=0 talent=9,9,9;
+#ineffa add weapon="deathmatch" refine=1 lvl=90/90;
+ineffa add weapon="balladofthefjords" refine=1 lvl=90/90;   // 300 DPS loss
+ineffa add set="morningstar" count=5;
+ineffa add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622 ; #main
+ineffa add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
+linnea char lvl=90/90 cons=0 talent=9,9,9;
+linnea add weapon="slingshot" refine=5 lvl=90/90;
+linnea add set="morningstar" count=4;
+#linnea add set="husk" count=4   +params=[stacks=4];
+linnea add stats hp=4780 atk=311 def%=0.583 def%=0.583 cd=0.622;
+linnea add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.3717 em=39.63 er=0.1101 cr=0.3305 cd=0.6605;
+
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+
+
+# Rotation
+active noelle; # SS Stacks
+
+for let i = 0; i < 4; i = i + 1 {
+  
+  linnea attack:2, skill;
+  if .ineffa.burst.ready { 
+    ineffa skill, burst; 
+  } else {
+    ineffa attack, skill;
+  }
+  
+  aino skill, burst;
+  noelle burst,
+       attack:3, dash, attack:3, dash, 
+       attack:3, dash, attack:4;
+       
+  linnea attack:2, skill;
+  if .ineffa.burst.ready { 
+    ineffa skill, burst; 
+  } else {
+    ineffa attack, skill;
+  }
+  
+  aino skill, burst;
+  noelle skill, 
+         attack:3, dash, attack:3, dash, 
+         attack:3, dash, attack:3, dash, attack:4;
+       
+}

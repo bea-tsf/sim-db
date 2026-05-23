@@ -1,0 +1,26 @@
+// from https://gcsim.app/db/g6wbFkjbNKLc
+
+itto attack, burst, skill[travel=0];
+  
+while !.itto.skill.ready {
+	if .itto.tags.strStack > 0 { 
+		itto charge; 
+	}
+	else { 
+		itto attack; 
+	}
+} 	#manage itto C6 until second ushi
+       
+itto skill[travel=0];
+        
+while .itto.mods.itto-q {
+	if .itto.tags.strStack > 0 { 
+		itto charge; 
+	}
+    else { 
+		itto attack; 
+    }
+} 	#manage itto C6 until Q expires
+
+
+// Evaluates to N1Q EC6~7 ...then N1CF N1CF instead of N4??? -> E C(?)N(?)
