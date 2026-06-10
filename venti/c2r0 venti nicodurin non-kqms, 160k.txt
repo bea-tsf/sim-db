@@ -1,0 +1,50 @@
+// c2r0 venti nicodurin, slightly above kqms, combo adjusted
+#original by voidrev
+
+venti char lvl=90/90 cons=2 talent=10,10,10;
+venti add weapon="rust" refine=5 lvl=90/90;
+venti add set="risingwinds" count=4;
+venti add stats hp=4780 atk=311 atk%=0.466 anemo%=0.466 cr=0.311;#main
+venti add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.331 cd=0.7944;
+
+durin char lvl=90/90 cons=0 talent=1,9,9; 
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="risingwinds" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cd=0.622; #main
+durin add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+// durin add weapon="lionsroar" refine=5 lvl=90/90;
+// durin add set="risingwinds" count=4;
+// durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311; #main
+// durin add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.1984 er=0.1102 em=39.64 cr=0.3972 cd=0.662;
+
+nicole char lvl=90/90 cons=0 talent=1,9,9; 
+nicole add weapon="flowingpurity" refine=1 lvl=90/90;
+nicole add set="hg" count=4;
+nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*8 atk%=0.0496*8 er=0.0551*6 em=19.82*2 cr=0.0331*4 cd=0.0662*2;
+
+faruzan char lvl=90/90 cons=6 talent=1,6,9;
+faruzan add weapon="favbow" refine=4 lvl=90/90;
+faruzan add set="totm" count=4;
+faruzan add stats hp=4780 atk=311 er=0.518 anemo%=0.466 cr=0.311;
+faruzan add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.3306 em=39.64 cr=0.331 cd=0.662;
+
+
+# Options
+options iteration=100;
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=100000000;
+
+# Rotation
+active faruzan;
+
+for let i = 0; i < 6; i = i + 1 {
+  faruzan burst;
+  nicole skill, burst;
+  durin burst, skill:2;
+  venti skill, burst, skill, attack:3, dash, attack:3, dash, attack:4, skill, attack:3, dash, attack:3;
+  
+}

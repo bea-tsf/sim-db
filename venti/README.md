@@ -1,0 +1,1 @@
+All Venti sims assume N3D. DPS goes up significantly if assuming proper RR cancels (especially on controller.)
