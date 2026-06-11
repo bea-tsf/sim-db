@@ -1,0 +1,59 @@
+// Hex team where Noelle actually gets to do something, unlike in fkin Nico Durin
+// 65k with R1 SS, 70k if simulating Gest
+#by pkach
+
+noelle char lvl=90/90 cons=6 talent=9,9,9;
+// Weapon choices
+#noelle add weapon="lumidouceelegy" refine=1 lvl=90/90;    // Simulating Gest
+noelle add weapon="serpentspine" refine=1 lvl=90/90;
+// Sets and stats
+noelle add set="husk" count=4;     // +params=[stacks=4];
+noelle add stats hp=4780 atk=311 def%=0.583 geo%=0.466 cd=0.622; # main
+noelle add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.062*2 em=39.63 er=0.0551*4 cr=0.0331*12 cd=0.0662*10; 
+// Simulating Gest passive
+#noelle add stats geo%=0.3 cd=0.3 atk%=-0.15 atkspd%=0.1;
+
+durin char lvl=90/90 cons=0 talent=9,9,9; 
+durin add weapon="wolffang" refine=1 lvl=90/90;
+durin add set="hg" count=4;
+durin add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; # main   
+durin add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0496*8 er=0.0551*2 em=39.64 cr=0.0331*10 cd=0.0662*8; 
+
+albedo char lvl=90/90 cons=1 talent=9,9,9;
+albedo add weapon="cinnabarspindle" refine=5 lvl=90/90;
+albedo add set="gt" count=4;
+albedo add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; # main
+albedo add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12; 
+
+gorou char lvl=90/90 cons=6 talent=9,9,9;
+gorou add weapon="favbow" refine=4 lvl=90/90;
+gorou add set="exile" count=4;
+gorou add set="eosf" count=1;
+gorou add stats hp=4780 atk=311 er=0.518 def%=0.435 cr=0.232; # main    // 5-star ER sands; capped KQMS ER here is ~277%
+gorou add stats def%=0.062*0.8*2 def=19.68*0.8*2 hp=253.94*0.8*2 hp%=0.0496*0.8*2 atk=16.54*0.8*2 atk%=0.0496*0.8*2 er=0.0551*0.8*10 em=19.82*0.8*2 cr=0.0331*2 cr=0.0331*0.8*8 cd=0.0662*0.8*6;   // 5* ER sands has KQMS cap of 2 CR rolls
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+
+# Rotation
+active noelle; # SS Stacks
+
+for let i = 0; i < 4; i = i + 1 {
+  
+  gorou attack, skill, burst;
+  albedo attack, skill;
+  
+  durin skill:2, burst;
+  noelle burst, skill, 
+         attack:3, dash, 
+         attack:3, dash, attack:4;
+  
+  durin skill:2;
+  gorou attack, skill;
+  noelle attack:4, dash, attack:4;
+}
