@@ -116,27 +116,29 @@ linnea add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.062
 == EM ILLUGA ==
 
 illuga char lvl=90/90 cons=6 talent=9,9,9;
-illuga add weapon="dragonsbane" refine=5 lvl=90/90;
+illuga add weapon="dragonsbane" refine=3 lvl=90/90;
 illuga add set="sms" count=5;
-illuga add stats hp=4780 atk=311 em=187 em=187 em=187; #main
-illuga add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*12 cr=0.0331*2 cd=0.0662*2;
+// illuga add set="notsu" count=2;
+// illuga add set="wt" count=2;
+illuga add stats hp=4780 atk=311 er=0.518 em=187 em=187; #main
+illuga add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*10 em=19.82*8 cr=0.0331*10 cd=0.0662*2;
 
 == ER FAV + FAVRINA ILLUGA ==
 
 illuga char lvl=90/90 cons=6 talent=9,9,9;
-illuga add weapon="favlance" refine=5 lvl=90/90;
+illuga add weapon="favlance" refine=3 lvl=90/90;
 illuga add set="sms" count=5;
 illuga add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311; #main
-illuga add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*12 cr=0.0331*8 cd=0.0662*2;
+illuga add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*6 em=19.82*10 cr=0.0331*4 cd=0.0662*8;
 
 == SAMPLE AINO ==
 
 aino char lvl=90/90 cons=6 talent=9,9,9;
 aino add weapon="favoniusgreatsword" refine=3 lvl=90/90;
-#aino add stats em=240;    // Simulating Master Key
 aino add set="silkenmoonsserenade" count=4;
-aino add stats hp=4780 er=0.518 em=187 cr=0.311;
-aino add stats hp=4780 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 em=19.315*4 er=0.0551*2 cr=0.0331*10 cd=0.0662*12;
+//aino add set="noblesse" count=5;
+aino add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311;    #main
+aino add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 em=19.315*4 er=0.0551*2 cr=0.0331*10 cd=0.0662*12;
 
 == EXILE GOROU ==
 
@@ -188,7 +190,7 @@ nicole add set="hg" count=4;
 nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
 nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*9 em=19.82*2 cr=0.0331*2 cd=0.0662*3;
 
-== SIMULATING SIG C6 NICOLE ==
+== WIP: SIMULATING SIG C6 NICOLE ==
 
 nicole char lvl=90/90 cons=6 talent=1,10,10; 
 nicole add weapon="cranesechoingcall" refine=1 lvl=90/90;    // Simulating Nicole sig
