@@ -1,0 +1,15 @@
+(6.5 * 5k + 4.5 * 20k) / 20 = 6124.8 exp per resin; 1 book = 3.26 resin
+60k / 20 = 3000 mora per resin; 1000 mora = 0.33 resin
+
+Lvl 80~90 takes 172 books (560.72) + 688k mora (227.04) = 787.76 resin
+
+Talent 1~10: ~820 resin total (https://genshin-center.com/planner)
+^ I am unsure whether this includes Sucrose/XQ passive or not.
+However, most of the resin for 1~10 comes from the Mora cost (~1.6m), and some from the weeklies.
+Therefore, even IF the passives weren't included, the numbers would not meaningfully change.
+
+80/90, 787.76 resin: personal 41k -> 43k, team 105.6k -> 108k
+NA 1~10, 820 resin: personal 35k -> 43k, team 100k -> 108k
+Q 1~10, 820 resin: personal 38.8k -> 43k, team 103k -> 108k
+
+Source sim for resin efficiency: https://github.com/bea-tsf/sim-db/blob/main/noelle/lunar/linn%20bina/illuga%20split%20E%20desnyc%20test%2C%20108k.txt
