@@ -1,8 +1,0 @@
-fn noelleCombo(atkCount) {
-for let N3 = 0; N3 < atkCount; N3 = N3 + 1
-    {  
-		noelle attack:3;
-		if .noelle.skill.ready { noelle skill; }	// N3E if E ready
-		else { noelle dash; }						// regular N3D
-    }
-}

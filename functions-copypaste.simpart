@@ -1,0 +1,261 @@
+== CONDITIONALS ==
+
+burst/skill cd (can use true/false or number of frames)
+burst/skill/dash/charge /swap ready
+stamina 
+normal (e.g normal == 3 or normal > 3 for NA counter)
+
+those are the basic ones
+then there are statuses, you can see those in the sample
+
+
+
+
+
+== KOLIBRI STANDARD DELAY ==
+
+# use truncated normal distribution for random delay
+fn rand_delay(mean, stddev, min, max) {
+  # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
+  let del = randnorm() * stddev + mean;
+  
+  # truncate random value according to min and max
+  if del < min {
+    del = min;
+  } else if del > max {
+    del = max;
+  }
+  
+  # execute delay
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  # print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  if action_id == .action.swap {
+    # add delay before swap
+      # ~3% chance at 6
+      # ~7% chance at 20
+    rand_delay(14, 4, 6, 20);
+  } else if prev_action_id != .action.swap  {
+    # add delay before every non-swap
+      # ~30% chance at 0
+      # 5% chance at 8
+    rand_delay(2, 4, 0, 8);
+  } else if prev_action_id == .action.swap {
+    # add delay after swap to account for repositioning
+      # ~16% chance at 6
+      # ~16% chance at 18
+    rand_delay(12, 6, 6, 18);
+  }
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+
+
+
+== KOLIBRI NO ATTACK AND SWAP Q DELAY ==
+
+# use truncated normal distribution for random delay
+fn rand_delay(mean, stddev, min, max) {
+  # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
+  let del = randnorm() * stddev + mean;
+  
+  # truncate random value according to min and max
+  if del < min {
+    del = min;
+  } else if del > max {
+    del = max;
+  }
+  
+  # execute delay
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
+
+  # this next if block handles implict swap or otherwise any pre swap delay specified in this function will not work
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+
+  if action_id == .action.swap {
+    # add delay before swap
+      # ~3% chance at 6
+      # ~7% chance at 20
+    rand_delay(14, 4, 6, 20);
+  } else if prev_action_id == .action.attack && action_id == .action.attack {
+    // no delay
+  } else if prev_action_id == .action.attack && action_id == .action.charge {
+    // no delay
+  } else if prev_action_id == .action.swap && action_id == .action.burst {
+    // no delay
+  } else if prev_action_id != .action.swap  {
+    # add delay before every non-swap
+      # ~30% chance at 0
+      # 5% chance at 8
+    rand_delay(2, 4, 0, 8);
+  } else if prev_action_id == .action.swap {
+    # add delay after swap to account for repositioning
+      # ~16% chance at 6
+      # ~16% chance at 18
+    rand_delay(12, 6, 6, 18);
+  }
+
+  # this here tracks the previous character id so that it can be used above
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+
+
+
+== MODIFIED CRYSTALLIZE DELAY ==
+
+fn rand_delay(mean, stddev) {
+  let del = randnorm() * stddev + mean;
+  if del > (mean + mean) {
+      del = mean + mean;
+  }      
+  delay(del);
+}
+
+let prev_char_id = -1;
+let prev_action_id = -1;
+let _execute_action = execute_action;
+
+fn execute_action(char_id number, action_id number, p map) {
+  if prev_char_id != char_id && action_id != .action.swap {
+    execute_action(char_id, .action.swap, []);
+  }
+    
+  # Inserts a random delay before swap
+  if action_id == .action.swap {
+    rand_delay(12, 3);
+  }
+  
+  # Inserts pick_up_crystallized("any") before dashes, Yelan E and Xilonen E
+  if action_id == .action.dash || ( char_id == .keys.char.yelan && action_id == .action.skill ) || ( char_id == .keys.char.xilonen && action_id == .action.skill ) {
+    pick_up_crystallize("any");
+  }
+
+  prev_char_id = char_id;
+  prev_action_id = action_id;
+  return _execute_action(char_id, action_id, p);
+}
+
+
+
+
+
+== PROTOTYPE CRESCENT 50% WEAKSPOT CHANCE ==
+
+fn ganyuAim() {
+  if .ganyu.weapon == .keys.weapon.crescent { # Attempts headshots (50%) with Crescent
+    ganyu aim[hold=2, weakspot=rand()>0.5];
+  } else { # Non weakspot opponents
+    ganyu aim[hold=2];
+  }
+}
+
+
+
+
+
+== NOELLE N3E WHEN E READY ==
+
+fn noelleShieldCombo(atkCount) {
+  for let N3 = 0; N3 < atkCount; N3 = N3 + 1 {  
+    noelle attack:3;
+    if .noelle.skill.ready { 
+      noelle skill;       // N3E if E ready
+    } else if N3 < atkCount - 1 { 
+      noelle dash;        // N3D if not ending combo
+    }                     // N3 if ending combo
+  }
+}
+
+
+
+== NOELLE AP CRYSTALLIZE MANAGEMENT ==
+
+// Function to manage AP Crystallize pickups from Noelle
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if .noelle.onfield && action_id == .action.dash {
+    pick_up_crystallize("any");   // Pick up crystallize before every Noelle dash
+  }
+  return _execute_action(char_id, action_id, p);
+}
+
+// Function to maximize Geo resonance uptime for non-lcrys Noelle
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  
+  // if !.noelle.status.breastplate && action_id == .action.dash {
+  if !.noelle.status.breastplate && 
+  (action_id == .action.dash) || (char_id == .keys.char.xilonen && action_id == .action.skill) {
+    
+    pick_up_crystallize("any");   // Pick up crys on dash/Xilo E if Noelle E isn't up
+    
+  }
+  return _execute_action(char_id, action_id, p);
+}
+
+
+
+
+
+== CRYSTALLIZE TRACKER + DEBUG ==
+
+let crystallize_shield_f = -16 * 60;
+
+fn pick_up_any_crystallize() {
+  if (pick_up_crystallize("any")) { # Pick up crystallize before every dash
+      crystallize_shield_f = f();
+      print("picked up");
+      print(crystallize_shield_f);
+  }
+}
+
+let _execute_action = execute_action;
+fn execute_action(char_id number, action_id number, p map) {
+  if action_id == .action.dash {
+    pick_up_any_crystallize();
+  }
+  return _execute_action(char_id, action_id, p);
+}
+
+fn crystallize_is_active() {
+  return (f() - crystallize_shield_f) < (15.1 * 60);
+}
+
+fn print_shield() {
+  if f() / 60 * 60 == f() {
+    print("crystallize_check: ");
+    print(crystallize_is_active());
+    print(crystallize_shield_f);
+  }
+}
+
+set_on_tick(print_shield);

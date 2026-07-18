@@ -1,0 +1,91 @@
+// from https://gcsim.app/db/g6wbFkjbNKLc
+
+itto attack, burst, skill[travel=0];
+  
+while !.itto.skill.ready {
+	if .itto.tags.strStack > 0 { 
+		itto charge; 
+	}
+	else { 
+		itto attack; 
+	}
+} 	#manage itto C6 until second ushi
+       
+itto skill[travel=0];
+        
+while .itto.mods.itto-q {
+	if .itto.tags.strStack > 0 { 
+		itto charge; 
+	}
+    else { 
+		itto attack; 
+    }
+} 	#manage itto C6 until Q expires
+
+
+// Evaluates to N1Q EC6~7 ...then N1CF N1CF instead of N4??? -> E C(?)N(?)
+// Why is it doing a million N1CFs????
+
+
+
+
+
+
+
+
+// from https://gcsim.app/db/JNMW8B7rwKhd
+
+  while .furina.mods.furina-burst {
+    if .dori.skill.ready && .dori.swap.ready {
+      dori skill;
+    } else if .dori.normal > 2 && .stam > 18 {
+      dori dash;
+    } else if .dori.infusion.dori-c6 {
+      dori attack;
+    } else if .nahida.skill.ready {
+      nahida skill;
+    } else {
+      nahida attack, charge;
+    }
+  }
+
+  // .dori.normal > 2 (etc) matters because it's a while loop
+
+
+
+
+
+// from https://gcsim.app/db/gFFfJPR6pg9p
+
+  while 1 {
+  switch {
+    case .furina.skill.ready:
+      furina skill, dash;
+    case .furina.burst.ready:
+      furina burst;
+    case .fischl.skill.ready:
+      fischl skill, attack;
+    case .fischl.burst.ready && !.fischl.oz:
+      fischl attack:2, burst;
+    case .esco.skill.ready:
+      esco skill;
+      if .esco.burst.ready {
+        esco burst;
+      } else {
+        esco attack:2;
+      }
+    case .mizuki.skill.ready:
+      mizuki skill;
+      while .mizuki.status.dreamdrifter-state > 190 {
+        if .mizuki.burst.ready {
+          mizuki burst;
+        } else {
+          wait(1);
+        }
+      }
+    case .mizuki.normal > 1:
+      mizuki charge;
+    default:
+      mizuki attack;
+  }
+}

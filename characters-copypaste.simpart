@@ -140,6 +140,14 @@ aino add set="silkenmoonsserenade" count=4;
 aino add stats hp=4780 atk=311 er=0.518 em=187 cr=0.311;    #main
 aino add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.1239 em=19.315*4 er=0.0551*2 cr=0.0331*10 cd=0.0662*12;
 
+== FAV XQ ==
+
+xingqiu char lvl=90/90 cons=6 talent=9,9,9;
+xingqiu add weapon="favsword" refine=3 lvl=90/90;
+xingqiu add set="eosf" count=4;
+xingqiu add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #main
+xingqiu add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*4 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
+
 == EXILE GOROU ==
 
 gorou char lvl=90/90 cons=6 talent=9,9,9;
@@ -177,7 +185,7 @@ luminegeo add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*
 durin char lvl=90/90 cons=0 talent=9,9,9; 
 durin add weapon="moonweaversdawn" refine=1 lvl=90/90;
 durin add set="risingwinds" count=4;
-#durin add set="hg" count=4;
+#durin add set="cg" count=4;
 durin add stats hp=4780 atk=311 atk%=0.466 pyro%=0.466 cr=0.311;		// ATK% sands
 #durin add stats hp=4780 atk=311 er=0.518 pyro%=0.466 cr=0.311;		// ER sands
 durin add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0496*2 er=0.0551*4 em=39.64 cr=0.331 cd=0.7944;
@@ -186,7 +194,7 @@ durin add stats def%=0.124 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0496*
 
 nicole char lvl=90/90 cons=0 talent=9,9,9; 
 nicole add weapon="oathsworn" refine=5 lvl=90/90;
-nicole add set="hg" count=4;
+nicole add set="cg" count=4;
 nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
 nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*9 em=19.82*2 cr=0.0331*2 cd=0.0662*3;
 
@@ -194,17 +202,10 @@ nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 
 
 nicole char lvl=90/90 cons=6 talent=1,10,10; 
 nicole add weapon="cranesechoingcall" refine=1 lvl=90/90;    // Simulating Nicole sig
-nicole add set="hg" count=4;
+nicole add set="cg" count=4;
 nicole add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
 nicole add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*10 atk%=0.0496*6 er=0.0551*9 em=19.82*2 cr=0.0331*2 cd=0.0662*3;
-// ATK is increased by 12%. After the equipping character creates a Shield, they gain "Pathfinder's Light" for 20s: 
-// Increases your active party member's DMG by 10% for every 1,000 ATK the equipping character has, up to a maximum of 26%.
-// Additionally, when the equipping character creates a Shield, they will also gain "Guide's Contentment": 
-// Restores 14 Elemental Energy to the equipping character. The aforementioned effect can trigger once every 14s, and can 
-// also be triggered when any type of chest is opened outside of combat. The equipping character may trigger this effect 
-// even when they are an off-field.
-// Hexerei: Secret Rite: When your own Hexerei character is off-field in the party, they will also gain 50% of the DMG 
-// increase from Pathfinder's Light.
+// JUST USE THE ACTUAL GCSIM C6 NICOLE YOU NERD
 
 == C1 BASE ALBEDO ==
 
@@ -219,162 +220,6 @@ albedo add stats def%=0.062*4 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 a
 mona char lvl=90/90 cons=4 talent=9,9,9;
 mona add weapon="favoniuscodex" refine=5 lvl=90/90;
 #mona add set="sms" count=4;
-mona add set="hg" count=4;
+mona add set="cg" count=4;
 mona add stats hp=4780 atk=311 er=0.518 hydro%=0.466 cr=0.311; #mainstats
 mona add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*10 cd=0.0662*12;
-
-
-
-#################################
-#################################
-
-== KOLIBRI STANDARD DELAY ==
-
-# use truncated normal distribution for random delay
-fn rand_delay(mean, stddev, min, max) {
-  # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
-  let del = randnorm() * stddev + mean;
-  
-  # truncate random value according to min and max
-  if del < min {
-    del = min;
-  } else if del > max {
-    del = max;
-  }
-  
-  # execute delay
-  delay(del);
-}
-
-let prev_char_id = -1;
-let prev_action_id = -1;
-
-let _execute_action = execute_action;
-fn execute_action(char_id number, action_id number, p map) {
-  # print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
-
-  # this next if block handles implict swap or otherwise any pre swap delay specified in this function will not work
-  if prev_char_id != char_id && action_id != .action.swap {
-    execute_action(char_id, .action.swap, []);
-  }
-
-  if action_id == .action.swap {
-    # add delay before swap
-      # ~3% chance at 6
-      # ~7% chance at 20
-    rand_delay(14, 4, 6, 20);
-  } else if prev_action_id != .action.swap  {
-    # add delay before every non-swap
-      # ~30% chance at 0
-      # 5% chance at 8
-    rand_delay(2, 4, 0, 8);
-  } else if prev_action_id == .action.swap {
-    # add delay after swap to account for repositioning
-      # ~16% chance at 6
-      # ~16% chance at 18
-    rand_delay(12, 6, 6, 18);
-  }
-
-  # this here tracks the previous character id so that it can be used above
-  prev_char_id = char_id;
-  prev_action_id = action_id;
-  return _execute_action(char_id, action_id, p);
-}
-
-
-
-== KOLIBRI NO ATTACK AND SWAP Q DELAY ==
-
-# use truncated normal distribution for random delay
-fn rand_delay(mean, stddev, min, max) {
-  # randnorm has mean: 0 and stddev: 1, so this makes it have mean and stddev from input
-  let del = randnorm() * stddev + mean;
-  
-  # truncate random value according to min and max
-  if del < min {
-    del = min;
-  } else if del > max {
-    del = max;
-  }
-  
-  # execute delay
-  delay(del);
-}
-
-let prev_char_id = -1;
-let prev_action_id = -1;
-
-let _execute_action = execute_action;
-fn execute_action(char_id number, action_id number, p map) {
-  #print(prev_char_id, " ", prev_action_id, " ", char_id, " ", action_id);
-
-  # this next if block handles implict swap or otherwise any pre swap delay specified in this function will not work
-  if prev_char_id != char_id && action_id != .action.swap {
-    execute_action(char_id, .action.swap, []);
-  }
-
-  if action_id == .action.swap {
-    # add delay before swap
-      # ~3% chance at 6
-      # ~7% chance at 20
-    rand_delay(14, 4, 6, 20);
-  } else if prev_action_id == .action.attack && action_id == .action.attack {
-    // no delay
-  } else if prev_action_id == .action.attack && action_id == .action.charge {
-    // no delay
-  } else if prev_action_id == .action.swap && action_id == .action.burst {
-    // no delay
-  } else if prev_action_id != .action.swap  {
-    # add delay before every non-swap
-      # ~30% chance at 0
-      # 5% chance at 8
-    rand_delay(2, 4, 0, 8);
-  } else if prev_action_id == .action.swap {
-    # add delay after swap to account for repositioning
-      # ~16% chance at 6
-      # ~16% chance at 18
-    rand_delay(12, 6, 6, 18);
-  }
-
-  # this here tracks the previous character id so that it can be used above
-  prev_char_id = char_id;
-  prev_action_id = action_id;
-  return _execute_action(char_id, action_id, p);
-}
-
-
-
-== MODIFIED CRYSTALLIZE DELAY ==
-
-fn rand_delay(mean, stddev) {
-  let del = randnorm() * stddev + mean;
-  if del > (mean + mean) {
-      del = mean + mean;
-  }      
-  delay(del);
-}
-
-let prev_char_id = -1;
-let prev_action_id = -1;
-let _execute_action = execute_action;
-
-fn execute_action(char_id number, action_id number, p map) {
-  if prev_char_id != char_id && action_id != .action.swap {
-    execute_action(char_id, .action.swap, []);
-  }
-    
-  # Inserts a random delay before swap
-  if action_id == .action.swap {
-    rand_delay(12, 3);
-  }
-  
-  # Inserts pick_up_crystallized("any") before dashes, Yelan E and Xilonen E
-  if action_id == .action.dash || ( char_id == .keys.char.yelan && action_id == .action.skill ) || ( char_id == .keys.char.xilonen && action_id == .action.skill ) {
-    pick_up_crystallize("any");
-  }
-
-  prev_char_id = char_id;
-  prev_action_id = action_id;
-  return _execute_action(char_id, action_id, p);
-}
-

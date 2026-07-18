@@ -1,0 +1,71 @@
+// 156.5k, C6R1 noille / C2R1 xilo / C0R5 sac bina / C0R1 linn, subs on noille slightly hyperinvested. no RV changes, just distribution.
+// distrib 42:28:23:8 Noelle - Linn - Bina - Xilo; distrib is equal Noelle:Linn if Linn is made C2 and nothing else is changed
+// noelle personal 64.5k, 20.1k of which is lcrys. switching from R1 redhorn to R5 SS is a ~3.2% team DPS loss
+
+#by pkach, ~24s rotation. trying to shorten it is a DPS loss
+#meant more to be a proof of concept than anything, in case you already had C2R1 Xilo and C6R1 Noelle before Linn.
+
+noelle char lvl=90/90 cons=6 talent=10,10,10;                               // invested talents
+#noelle add weapon="serpentspine" refine=5 lvl=90/90  +params=[stacks=5];   // KQMS
+noelle add weapon="redhorn" refine=1 lvl=90/90;
+#noelle add set="husk" count=4   +params=[stacks=4];
+#noelle add set="mh" count=4;
+noelle add set="notsu" count=4;
+noelle add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; #main
+noelle add stats geo%=0.2 em=102.82;    // GFO buff
+#noelle add stats def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 def%=0.062*5 em=19.82*2 er=0.0551*4 cr=0.0331*10 cd=0.0662*9;   // Redhorn, KQMS CR hat
+noelle add stats def=19.68*2 hp=253.94*0 hp%=0.0496*0 atk=16.54*0 atk%=0.0496*2 def%=0.062*7 em=19.82*1 er=0.0551*4 cr=0.0331*10 cd=0.0662*13;   // Redhorn hyperinvest
+#noelle add stats def=19.68*2 hp=253.94*0 hp%=0.0496*0 atk=16.54*0 atk%=0.0496*2 def%=0.062*8 em=19.82*1 er=0.0551*4 cr=0.0331*10 cd=0.0662*12;   // SS R5 hyperinvest
+
+xilo char lvl=90/90 cons=2 talent=6,10,9; 
+xilo add weapon="pps" refine=1 lvl=90/90;
+xilo add set="scroll" count=4;
+xilo add stats hp=4780 atk=311 def%=0.583 def%=0.583 def%=0.583; #main
+xilo add stats geo%=0.2 em=102.82;    // GFO buff
+xilo add stats def%=0.062*22 def=39.36 hp=507.88 hp%=0.0992 atk=33.08 atk%=0.0992 er=0.1102 em=39.64 cr=0.0331*2 cd=0.0662*2;   // Maxing AG
+
+columbina char lvl=90/90 cons=0 talent=6,10,10;
+columbina add weapon="sacjade" refine=5 lvl=90/90;
+#columbina add set="sms" count=4;
+columbina add set="morningstar" count=4;
+columbina add stats hp=4780 atk=311 hp%=0.466 em=189 cd=0.622; #main
+columbina add stats geo%=0.2 em=133.66;    // GFO buff
+columbina add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*7 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*7 cd=0.0662*10;
+
+linnea char lvl=90/90 cons=0 talent=6,10,6;                     // invested talents
+linnea add weapon="tomeoftheeternalflow" refine=1 lvl=90/90;    // GFO base stats
+linnea add stats def%=0.16 geo%=0.4 em=215;                     // Simluating GFO based on LunarToEM calc, starting 40 EM/85% average LCrys bonus
+linnea add set="aubade" count=4;
+#linnea add set="husk" count=4   +params=[stacks=4];
+#linnea add set="sms" count=4;
+linnea add stats hp=4780 atk=311 def%=0.583 def%=0.583 cr=0.311; #main
+linnea add stats hp=507.88 hp%=0.0991 atk=33.07 atk%=0.0991 def=39.35 def%=0.062*4 em=39.63 er=0.1101 cr=0.3966 cd=0.6605;
+
+
+# Options
+options iteration=1000; 
+options swap_delay=12;
+energy every interval=480,720 amount=1;
+
+# Targets
+target lvl=100 resist=0.1 radius=2 pos=0,2.3 hp=100000000;
+
+# Rotation
+active noelle; 			    // If applicable, for SS stacks and Linn Husk stacks
+
+for let i = 0; i < 4; i = i + 1 {
+  linnea skill;         // swap delay is not covered on purpose; also makes rotation more natural for ingame
+  
+  if .columbina.burst.ready {
+    columbina skill, burst; 
+  } else { 
+    columbina skill; 
+  }
+  
+  xilo skill, attack:2;
+  noelle skill, burst, attack:3, dash, attack:3, dash, attack:4;
+  
+  xilo skill, attack:2;
+  noelle attack:3, dash, attack:3, dash, attack:3;
+  
+}
