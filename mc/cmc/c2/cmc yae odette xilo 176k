@@ -1,0 +1,55 @@
+# Build assumptions
+yae char lvl=90/90 cons=1 talent=9,9,9;
+yae add weapon="oathsworneye" refine=1 lvl=90/90;
+yae add set="deepshadow" count=5;
+yae add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622; #main
+yae add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+yae add stats em= 120 stellar-conduct%=.32;
+
+odette char lvl=90/90 cons=0 talent=9,9,9; 
+odette add weapon="finaleofthedeep" refine=5 lvl=90/90;
+odette add set="heartofthefurnace" count=4;
+odette add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
+odette add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+luminecryo char lvl=90/90 cons=2 talent=9,9,9;
+luminecryo add weapon="exaiphanesblade" refine=3 lvl=90/90;
+luminecryo add set="deepshadow" count=4;
+luminecryo add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+luminecryo add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*8 er=0.0551*2 em=19.82*3 cr=0.0331*7 cd=0.0662*10;
+
+xilo char lvl=90/90 cons=0 talent=9,9,9; 
+xilo add weapon="favsword" refine=5 lvl=90/90;
+xilo add set="ins" count=4;
+xilo add stats hp=3571 atk=232 def%=.435 def%=0.435 cr=0.311;
+xilo add stats def%=0.062*2*.84 def=19.68*2*.84 hp=253.94*2*.84 hp%=0.0496*2*.84 atk=16.54*2*.84 atk%=0.0496*2*.84 er=0.0551*2*.84 em=19.82*2*.84 cr=0.0331*7*.84 cd=0.0662*9*.84;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+active yae; 
+
+for let i = 0; i < 6; i = i + 1 {
+  if i && .yae.burst.ready {
+    yae burst;
+  } else if i {
+    luminecryo dash, attack, charge;
+    yae attack;
+  }
+  yae skill:3; 
+  xilo skill,attack:2;
+  if  !is_even(i) {
+    odette burst;
+  } else { 
+    odette skill;
+  }
+  odette skill;
+  luminecryo skill, 
+             attack:1, charge, dash,
+             attack:1, charge, dash, 
+             attack:1, charge;
+  xilo skill, attack:2; 
+  luminecryo attack:2, charge,
+             burst,
+             attack:2, charge; 
+}

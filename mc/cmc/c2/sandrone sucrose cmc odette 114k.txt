@@ -1,0 +1,82 @@
+# Build assumptions
+sandrone char lvl=90/90 cons=0 talent=9,9,9;
+sandrone add weapon="mailedflower" refine=5 lvl=90/90;
+sandrone add set="bs" count=4;
+sandrone add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+sandrone add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*4 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*10;
+
+sucrose char lvl=90/90 cons=6 talent=9,9,9;         
+sucrose add weapon="sacfrag" refine=5 lvl=90/90;
+sucrose add set="vv" count=4;
+sucrose add stats hp=4780 atk=311 em=187 em=187 em=187;
+sucrose add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*12 em=19.82*6 cr=0.0331*4 cd=0.0662*6;
+
+luminecryo char lvl=90/90 cons=6 talent=9,9,9; 
+luminecryo add weapon="exaiphanesblade" refine=5 lvl=90/90;
+luminecryo add set="totm" count=4;
+luminecryo add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cd=0.622;
+luminecryo add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*5 er=0.0551*2 em=19.82*2 cr=0.0331*11 cd=0.0662*10;
+
+// qiqi char lvl=90/90 cons=6 talent=9,9,9; 
+// qiqi add weapon="finaleofthedeep" refine=5 lvl=90/90;
+// qiqi add set="totm" count=4;
+// qiqi add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 atk%=0.466;
+// qiqi add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*2 cr=0.0331*12 cd=0.0662*12;
+
+odette char lvl=90/90 cons=0 talent=9,9,9; 
+odette add weapon="finaleofthedeep" refine=5 lvl=90/90;
+odette add set="heartofthefurnace" count=4;
+odette add stats hp=4780 atk=311 atk%=0.466 atk%=0.466 cr=0.311;
+odette add stats def%=0.062*2 def=19.68*2 hp=253.94*2 hp%=0.0496*2 atk=16.54*2 atk%=0.0496*2 er=0.0551*2 em=19.82*4 cr=0.0331*10 cd=0.0662*12;
+
+options swap_delay=12 iteration=1000;
+target lvl=100 resist=0.1 radius=2 pos=0,2.4 hp=999999999;
+energy every interval=480,720 amount=1;
+
+fn sandrone_C0 (c) {
+  for let k=0; k<c; k=k+1 {
+   sandrone charge[frames=181], skill;
+    if .sandrone.burst.ready {
+      sandrone burst;
+    }
+  }
+}
+
+fn sandrone_C1 (c) {
+  for let k=0; k<c; k=k+1 {
+   sandrone charge[frames=361], skill;
+    if .sandrone.burst.ready {
+      sandrone burst;
+    }
+  }
+}
+
+active odette;
+for let i = 0; i < 7; i = i + 1 {
+  odette skill, skill;
+  sucrose attack, skill, dash;
+  if .sucrose.burst.ready {
+    sucrose burst, attack;
+  }
+  luminecryo skill;
+  if i {
+    luminecryo attack, charge, burst;
+  } else {
+    luminecryo burst;
+  }
+  sandrone skill;
+  sandrone charge[frames=181], skill;
+    if .sandrone.burst.ready {
+      sandrone burst;
+    }
+  sucrose attack, skill, dash;
+  sandrone charge[frames=181], skill;
+    if .sandrone.burst.ready {
+      sandrone burst;
+    }
+  sandrone charge[frames=181], skill;
+    if .sandrone.burst.ready {
+      sandrone burst;
+    }
+}
+
